@@ -18,11 +18,11 @@ namespace WebAtividadeEntrevista.Models
         /// </summary>
         [Required]
         public string CEP { get; set; }
-
         /// <summary>
         /// CPF
         /// </summary>
-        [Required]
+        [Required(ErrorMessage = "O campo CPF é obrigatório")]
+        [RegularExpression(@"^\d{3}\.\d{3}\.\d{3}\-\d{2}$", ErrorMessage = "Digite um CPF válido no formato 000.000.000-00")]
         public string CPF { get; set; }
 
         /// <summary>

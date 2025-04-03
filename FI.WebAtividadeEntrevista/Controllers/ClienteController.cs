@@ -26,7 +26,17 @@ namespace WebAtividadeEntrevista.Controllers
         public JsonResult Incluir(ClienteModel model)
         {
             BoCliente bo = new BoCliente();
-            
+
+            // Remove máscara do CPF antes da verificação e do salvamento
+            string cpfSemMascara = model.CPF.Replace(".", "").Replace("-", "");
+
+            // Verifica se o CPF já existe
+            if (bo.VerificarExistencia(model.CPF))
+            {
+                Response.StatusCode = 400;
+                return Json("Já existe um cliente cadastrado com este CPF.");
+            }
+
             if (!this.ModelState.IsValid)
             {
                 List<string> erros = (from item in ModelState.Values
