@@ -1,4 +1,4 @@
-﻿CREATE PROC FI_SP_PesqCliente
+﻿create PROC FI_SP_PesqCliente
 	@iniciarEm int,
 	@quantidade int,
 	@campoOrdenacao varchar(200),
@@ -21,10 +21,12 @@ BEGIN
 
 	SET @CAMPOS = '@iniciarEm int,@quantidade int'
 	SET @SCRIPT = 
-	'SELECT ID, NOME, SOBRENOME, NACIONALIDADE, CEP, ESTADO, CIDADE, LOGRADOURO, EMAIL, TELEFONE FROM
-		(SELECT ROW_NUMBER() OVER (ORDER BY ' + @ORDER + ') AS Row, ID, NOME, SOBRENOME, NACIONALIDADE, CEP, ESTADO, CIDADE, LOGRADOURO, EMAIL, TELEFONE FROM CLIENTES WITH(NOLOCK))
-		AS ClientesWithRowNumbers
-	WHERE Row > @iniciarEm AND Row <= (@iniciarEm+@quantidade) ORDER BY'
+'SELECT ID, NOME, SOBRENOME, NACIONALIDADE, CEP,  CPF, ESTADO, CIDADE, LOGRADOURO, EMAIL, TELEFONE FROM
+        (SELECT ROW_NUMBER() OVER (ORDER BY ' + @ORDER + ') AS Row, 
+                ID, NOME, SOBRENOME, NACIONALIDADE, CEP, CPF, ESTADO, CIDADE, LOGRADOURO, EMAIL, TELEFONE 
+         FROM CLIENTES WITH(NOLOCK)) AS ClientesWithRowNumbers
+     WHERE Row > @iniciarEm AND Row <= (@iniciarEm + @quantidade)
+     ORDER BY ' + @ORDER
 	
 	SET @SCRIPT = @SCRIPT + @ORDER
 			
