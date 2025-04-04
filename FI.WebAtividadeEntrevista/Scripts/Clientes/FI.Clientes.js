@@ -1,39 +1,39 @@
-﻿
-$(document).ready(function () {
-    $('#formCadastro').submit(function (e) {
-        e.preventDefault();
+﻿function incluirCliente() {
         $.ajax({
             url: urlPost,
             method: "POST",
             data: {
-                "NOME": $(this).find("#Nome").val(),
-                "CEP": $(this).find("#CEP").val(),
-                "CPF": $(this).find("#CPF").val(),
-                "Email": $(this).find("#Email").val(),
-                "Sobrenome": $(this).find("#Sobrenome").val(),
-                "Nacionalidade": $(this).find("#Nacionalidade").val(),
-                "Estado": $(this).find("#Estado").val(),
-                "Cidade": $(this).find("#Cidade").val(),
-                "Logradouro": $(this).find("#Logradouro").val(),
-                "Telefone": $(this).find("#Telefone").val()
+                "NOME": $("#Nome").val(),
+                "CEP": $("#CEP").val(),
+                "CPF": $("#CPF").val(),
+                "Email": $("#Email").val(),
+                "Sobrenome": $("#Sobrenome").val(),
+                "Nacionalidade": $("#Nacionalidade").val(),
+                "Estado": $("#Estado").val(),
+                "Cidade": $("#Cidade").val(),
+                "Logradouro": $("#Logradouro").val(),
+                "Telefone": $("#Telefone").val()
             },
             error:
-            function (r) {
-                if (r.status == 400)
-                    ModalDialog("Ocorreu um erro", r.responseJSON);
-                else if (r.status == 500)
-                    ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
-            },
+                function (r) {
+                    if (r.status == 400)
+                        ModalDialog("Ocorreu um erro", r.responseJSON);
+                    else if (r.status == 500)
+                        ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
+                },
             success:
-            function (r) {
-                ModalDialog("Sucesso!", r)
-                $("#formCadastro")[0].reset();
-            }
-        });
-    })
-    
-})
+                function (resposta) {
+                    ModalDialog("Sucesso!", resposta.mensagem)
+                    $("#Id").val(resposta.id);
 
+                    // Habilita botão da modal
+                    $("#btnBeneficiarios").prop("disabled", false);
+
+                    // Chama a função para carregar beneficiários deste cliente
+                    carregarBeneficiarios(resposta.id);
+                }
+        });
+}
 function ModalDialog(titulo, texto) {
     var random = Math.random().toString().replace('.', '');
     var texto = '<div id="' + random + '" class="modal fade">                                                               ' +

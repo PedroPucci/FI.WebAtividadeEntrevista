@@ -1,17 +1,21 @@
 ﻿using FI.AtividadeEntrevista.BLL;
-using WebAtividadeEntrevista.Models;
+using FI.AtividadeEntrevista.DML;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using FI.AtividadeEntrevista.DML;
+using WebAtividadeEntrevista.Models;
 
 namespace WebAtividadeEntrevista.Controllers
 {
     public class ClienteController : Controller
     {
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult Forms()
         {
             return View();
         }
@@ -27,15 +31,19 @@ namespace WebAtividadeEntrevista.Controllers
         {
             BoCliente bo = new BoCliente();
 
-            // Remove máscara do CPF antes da verificação e do salvamento
             string cpfSemMascara = model.CPF.Replace(".", "").Replace("-", "");
 
-            // Verifica se o CPF já existe
             if (bo.VerificarExistencia(model.CPF))
             {
                 Response.StatusCode = 400;
                 return Json("Já existe um cliente cadastrado com este CPF.");
             }
+
+            //if (bo.ValidarCPF(model.CPF))
+            //{
+            //    Response.StatusCode = 400;
+            //    return Json("CPF inválido tente novamente.");
+            //}
 
             if (!this.ModelState.IsValid)
             {
@@ -63,8 +71,8 @@ namespace WebAtividadeEntrevista.Controllers
                     Telefone = model.Telefone
                 });
 
-           
-                return Json("Cadastro efetuado com sucesso");
+
+                return Json(new { mensagem = "Cliente salvo com sucesso!", id = model.Id });
             }
         }
 
@@ -151,7 +159,6 @@ namespace WebAtividadeEntrevista.Controllers
 
                 List<Cliente> clientes = new BoCliente().Pesquisa(jtStartIndex, jtPageSize, campo, crescente.Equals("ASC", StringComparison.InvariantCultureIgnoreCase), out qtd);
 
-                //Return result to jTable
                 return Json(new { Result = "OK", Records = clientes, TotalRecordCount = qtd });
             }
             catch (Exception ex)

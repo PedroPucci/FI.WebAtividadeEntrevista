@@ -1,2 +1,1 @@
-﻿sp_helptext FI_SP_IncClienteV2
-select * from CLIENTES
+﻿EXEC FI_SP_ConsCliente @ID = 1;
