@@ -128,7 +128,7 @@
     <div class="row mt-2">
         <div class="col-sm-6">
             <!-- Botão -->
-            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalBeneficiarios">
+            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalBeneficiarios" onclick="abrirModalBeneficiarios()">
                 Beneficiários
             </button>
         </div>
@@ -143,4 +143,6 @@
 
 
 @Scripts.Render("~/Scripts/Clientes/FI.Beneficiarios.js")
+@Scripts.Render("~/Scripts/Clientes/FI.ListBeneficiarios.js")
 @Scripts.Render("~/Scripts/Clientes/FI.Clientes.js")
+@Scripts.Render("~/Scripts/Clientes/FI.AltClientes.js")

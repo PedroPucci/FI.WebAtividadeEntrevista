@@ -26,3 +26,16 @@ function carregarBeneficiarios(idCliente) {
         }
     });
 }
+
+function abrirModalBeneficiarios() {
+    const idCliente = $("#Id").val();
+    if (!idCliente || idCliente === "0") {
+        alert("Você precisa salvar o cliente antes de adicionar beneficiários.");
+        return;
+    }
+
+    carregarBeneficiarios(idCliente);
+}
+
+// torna a função acessível globalmente
+window.abrirModalBeneficiarios = abrirModalBeneficiarios;

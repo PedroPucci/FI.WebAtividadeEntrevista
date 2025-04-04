@@ -1,6 +1,4 @@
 function incluirBeneficiario() {
-    console.log("Função incluirBeneficiario executada");
-
     const cpf = $("#beneficiarioCPF").val();
     const nome = $("#beneficiarioNome").val();
     const idCliente = $("#Id").val();
@@ -19,8 +17,6 @@ function incluirBeneficiario() {
             IdCliente: idCliente
         },
         success: function (response) {
-            console.log("Resposta do servidor:", response);
-
             const linha = `
                 <tr>
                     <td>${cpf}</td>
@@ -35,7 +31,6 @@ function incluirBeneficiario() {
             $("#beneficiarioNome").val("");
         },
         error: function (xhr) {
-            console.error("Erro:", xhr);
             alert("Erro: " + xhr.responseText);
         }
     });
